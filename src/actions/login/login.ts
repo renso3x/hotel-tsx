@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
 import { LoginActionTypes } from './types';
+import { API_URL } from '../../config';
 
-const API = 'http://localhost:4000';
 
 export interface ILogin {
   email: string;
@@ -18,6 +18,7 @@ export interface LoginMakeAuthAction {
 export const makeLogin = (auth: ILogin) => {
   return async (dispatch: Dispatch) => {
     try {
+      const API = API_URL['dev'].url;
       const response = await axios.post(`${API}/authenticate`, auth);
       localStorage.setItem('token', response.data.token);
       dispatch<LoginMakeAuthAction>({
@@ -30,3 +31,6 @@ export const makeLogin = (auth: ILogin) => {
     }
   }
 }
+
+
+export const getToken = localStorage.getItem('token');
