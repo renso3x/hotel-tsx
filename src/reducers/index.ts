@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux';
 import { loginReducer, ILoginState } from './login';
+import { hotelReducer, HotelState } from './hotel';
 
-interface IRootState {
-  login: ILoginState
+export interface IRootState {
+  login: ILoginState,
+  hotel: HotelState
 }
 
 export const rootReducers = combineReducers<IRootState>({
-  login: loginReducer
+  login: loginReducer,
+  hotel: hotelReducer
 });

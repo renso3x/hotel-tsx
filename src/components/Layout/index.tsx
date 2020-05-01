@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -77,6 +78,9 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       marginLeft: 0,
     },
+    link: {
+      textDecoration:" none"
+    }
   }),
 );
 
@@ -88,6 +92,17 @@ export const Layout: React.SFC<Props> = ({ children }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+
+  const SIDEBAR_LIST = [{
+    label: 'Dashboard',
+    path: '/'
+  }, {
+    label: 'Bookings',
+    path: '/'
+  }, {
+    label: 'Setup',
+    path: '/setup'
+  }]
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -137,11 +152,13 @@ export const Layout: React.SFC<Props> = ({ children }) => {
         </div>
         <Divider />
         <List>
-          {['Dashboard', 'Bookings', 'Setup'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
+          {SIDEBAR_LIST.map((sidebar, index) => (
+            <Link key={index} to={sidebar.path} className={classes.link}>
+              <ListItem button>
+                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemText primary={sidebar.label} />
+              </ListItem>
+            </Link>
           ))}
         </List>
       </Drawer>
